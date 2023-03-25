@@ -10,7 +10,7 @@ const GlobalStyles = createGlobalStyle`
 }
 
 body {
-    padding: 10px 5px;
+    padding: 1rem 0.8rem;
     background-color: #fff;
     min-height: 100vh;
 }
