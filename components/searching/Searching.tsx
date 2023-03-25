@@ -3,24 +3,26 @@ import styled from "styled-components";
 const SearchingContainer = styled.div`
   display: flex;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
   align-items: center;
 `;
 
 const SearchingInput = styled.input`
   border: 3px solid #b6d8e4;
   flex-grow: 1;
-  height: 40px;
-  border-radius: 10px 0px 0px 10px;
-  padding-left: 10px;
+  height: 2.5rem;
+  font-size: 1rem;
+  border-radius: 0.5rem 0 0 0.5rem;
+  padding-left: 0.5rem;
 `;
 
 const SearchingButton = styled.div`
-  height: 40px;
-  padding: 0px 15px;
-  line-height: 40px;
+  height: 2.5rem;
+  padding: 0px 1rem;
+  line-height: 2.5rem;
+  font-size: 1rem;
   background-color: #b6d9e4;
-  border-radius: 0px 10px 10px 0px;
+  border-radius: 0 0.5rem 0.5rem 0;
 `;
 
 const Searching = () => {
