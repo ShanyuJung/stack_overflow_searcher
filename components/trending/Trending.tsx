@@ -1,5 +1,5 @@
-import { TagDataInterface } from "@/types/types";
-import { useEffect, useState } from "react";
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Tag from "./Tag";
 
@@ -22,36 +22,30 @@ const TagContainer = styled.div`
   gap: 0.5rem;
 `;
 
+const WarningText = styled.h3`
+  color: red;
+`;
+
 const Trending = () => {
-  const [tags, setTags] = useState<TagDataInterface[]>([]);
-  const [selectedTag, setSelectedTag] = useState<string>("");
-
-  useEffect(() => {
-    const fetchTagsHandler = async () => {
-      const res = await fetch(
-        "https://api.stackexchange.com/2.3/tags?page=1&pagesize=10&order=desc&sort=popular&site=stackoverflow"
-      );
-      const data = await res.json();
-      setTags(data.items);
-      setSelectedTag(data.items[0].name);
-    };
-
-    fetchTagsHandler();
-  }, []);
+  const trending = useSelector((state: RootState) => state.trending);
 
   return (
     <TrendingContainer>
       <Title>Trending</Title>
       <TagContainer>
-        {tags.map((tag) => {
-          return (
-            <Tag
-              key={`tag-${tag.name}`}
-              name={tag.name}
-              isSelected={selectedTag === tag.name}
-            />
-          );
-        })}
+        {trending.error ? (
+          <WarningText>Failed to get trending tags</WarningText>
+        ) : (
+          trending.trendingTags.map((tag: { name: string }) => {
+            return (
+              <Tag
+                key={`tag-${tag.name}`}
+                name={tag.name}
+                isSelected={trending.selectedTag === tag.name}
+              />
+            );
+          })
+        )}
       </TagContainer>
     </TrendingContainer>
   );

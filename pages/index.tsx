@@ -1,8 +1,11 @@
 import Head from "next/head";
 import Searching from "@/components/searching/Searching";
 import Trending from "@/components/trending/Trending";
+import { GetServerSideProps, NextPage } from "next";
+import { wrapper } from "@/store";
+import { initTrendingHandler } from "@/store/trending-actions";
 
-export default function Home() {
+const Home: NextPage = () => {
   return (
     <>
       <Head>
@@ -17,4 +20,16 @@ export default function Home() {
       </main>
     </>
   );
-}
+};
+
+export default Home;
+
+export const getServerSideProps: GetServerSideProps =
+  wrapper.getServerSideProps((store) => async () => {
+    try {
+      await store.dispatch(initTrendingHandler());
+      return { props: {} };
+    } catch {
+      return { props: {} };
+    }
+  });

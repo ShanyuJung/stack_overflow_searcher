@@ -5,3 +5,9 @@ export interface TagDataInterface {
   is_required: boolean;
   name: string;
 }
+
+export interface TrendingStore {
+  trendingTags: TagDataInterface[];
+  selectedTag: string;
+  error: boolean;
+}

@@ -1,4 +1,5 @@
 import type { AppProps } from "next/app";
+import { Provider } from "react-redux";
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
@@ -16,11 +17,18 @@ body {
 }
 `;
 
+const { wrapper } = require("../store/index");
+
 export default function App({ Component, pageProps }: AppProps) {
+  const { store } = wrapper.useWrappedStore(pageProps);
+
+  console.log("store", store);
   return (
     <>
-      <GlobalStyles />
-      <Component {...pageProps} />
+      <Provider store={store}>
+        <GlobalStyles />
+        <Component {...pageProps} />
+      </Provider>
     </>
   );
 }
