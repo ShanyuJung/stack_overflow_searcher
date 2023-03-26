@@ -5,6 +5,10 @@ const SearchingContainer = styled.div`
   width: 100%;
   margin-bottom: 1rem;
   align-items: center;
+  position: sticky;
+  top: 0;
+  padding-top: 1rem;
+  background-color: #fff;
 `;
 
 const SearchingInput = styled.input`

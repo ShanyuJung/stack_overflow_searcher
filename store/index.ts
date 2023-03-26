@@ -6,12 +6,12 @@ import {
 } from "@reduxjs/toolkit";
 import trending from "./trending-slice";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
-import { TrendingStore } from "@/types/types";
+import { ITrendingStore } from "@/types/types";
 
 const combineReducer = combineReducers({ trending });
 
 const masterReducer = (
-  state: CombinedState<{ trending: TrendingStore }> | undefined,
+  state: CombinedState<{ trending: ITrendingStore }> | undefined,
   action: AnyAction
 ) => {
   if (action.type === HYDRATE) {
