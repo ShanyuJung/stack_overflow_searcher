@@ -1,5 +1,6 @@
-import { RootState } from "@/store";
-import { useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store";
+import { trendingActions } from "@/store/trending-slice";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Tag from "./Tag";
 
@@ -28,6 +29,11 @@ const WarningText = styled.h3`
 
 const Trending = () => {
   const trending = useSelector((state: RootState) => state.trending);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const selectedTagHandler = (selectedTag: string) => {
+    dispatch(trendingActions.selectTag({ selectedTag: selectedTag }));
+  };
 
   return (
     <TrendingContainer>
@@ -42,6 +48,7 @@ const Trending = () => {
                 key={`tag-${tag.name}`}
                 name={tag.name}
                 isSelected={trending.selectedTag === tag.name}
+                onClick={selectedTagHandler}
               />
             );
           })

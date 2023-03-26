@@ -16,6 +16,11 @@ const trendingSlice = createSlice({
       state.selectedTag = action.payload.selectedTag;
       state.error = action.payload.error;
     },
+    selectTag(state, action) {
+      state.trendingTags = state.trendingTags;
+      state.selectedTag = action.payload.selectedTag;
+      state.error = state.error;
+    },
   },
 });
 
