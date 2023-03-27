@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Question from "./Question";
 import loadingSpinner from "../../assets/images/loading.gif";
+import ErrorText from "./ErrorText";
 
 const options = {
   root: null,
@@ -34,37 +35,27 @@ const LoadingSpinner = styled.div`
   background-size: cover;
 `;
 
-const WarningText = styled.h2`
-  width: 100%;
-  text-align: center;
-  color: red;
-`;
-
 const QuestionListing = () => {
   const [data, setData] = useState<IQuestion[]>([]);
   const [curPage, setCurPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
+  const [errorId, setErrorId] = useState<string>("");
   const containerRef = useRef<HTMLDivElement | null>(null);
   const trending = useSelector((state: RootState) => state.trending);
 
   const fetchQuestionHandler = useCallback(async () => {
-    if (!trending.selectedTag) {
-      setIsError(true);
-      return;
-    }
-
-    if (isLoading || !hasMore) return;
+    if (isLoading || !hasMore || !trending.selectedTag || isError) return;
 
     try {
       setIsError(false);
       setIsLoading(true);
       const res = await api.fetchQuestion(curPage, trending.selectedTag);
-      const data = res.items as IQuestion[];
-      if (!data) {
-        throw new Error("Data Error");
+      if (res.error_id) {
+        throw new Error(res.error_id);
       }
+      const data = res.items as IQuestion[];
       setData((prev) => [...prev, ...data]);
       setCurPage((prev) => prev + 1);
       if (!res.has_more) {
@@ -72,10 +63,13 @@ const QuestionListing = () => {
       }
       setIsLoading(false);
     } catch (err) {
+      if (err instanceof Error) {
+        setErrorId(err.message);
+      }
       setIsError(true);
       setIsLoading(false);
     }
-  }, [curPage, hasMore, isLoading, trending.selectedTag]);
+  }, [curPage, hasMore, isError, isLoading, trending.selectedTag]);
 
   useEffect(() => {
     const observerHandler = (entries: { isIntersecting: boolean }[]) => {
@@ -105,10 +99,10 @@ const QuestionListing = () => {
 
   return (
     <ListContainer>
-      {data.map((item) => {
+      {data?.map((item) => {
         return <Question key={item.question_id} questionData={item} />;
       })}
-      {isError && <WarningText>Something went wrong!</WarningText>}
+      {isError && <ErrorText errorId={errorId} />}
       <ObserverContainer ref={containerRef}>
         {isLoading && <LoadingSpinner />}
       </ObserverContainer>
