@@ -10,4 +10,11 @@ export const api = {
     );
     return await res.json();
   },
+
+  async fetchTrendingTags(tagNumber: number) {
+    const res = await fetch(
+      `${this.hostname}/${this.version}/tags?page=1&pagesize=${tagNumber}&order=desc&sort=popular&site=stackoverflow`
+    );
+    return await res.json();
+  },
 };
