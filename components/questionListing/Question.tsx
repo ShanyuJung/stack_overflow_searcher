@@ -3,10 +3,14 @@ import styled from "styled-components";
 
 const Container = styled.div`
   width: 100%;
-  height: 6rem;
+  height: 6.5rem;
   align-items: center;
   display: flex;
   border-bottom: 1px solid #ccc;
+  padding-top: 0.5rem;
+  &:hover {
+    background-color: #eee;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -14,6 +18,15 @@ const Wrapper = styled.div`
   height: 6rem;
   flex-direction: column;
   flex-grow: 1;
+`;
+
+const StyleLink = styled.a`
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const Title = styled.h4``;
@@ -72,13 +85,15 @@ const OwnerName = styled.p`
 `;
 
 const Question = ({ questionData }: { questionData: IQuestion }) => {
-  const { title, score, answer_count, view_count, owner, is_answered } =
+  const { title, score, answer_count, view_count, owner, is_answered, link } =
     questionData;
 
   return (
     <Container>
       <Wrapper>
-        <Title>{title}</Title>
+        <StyleLink target="_blank" href={link}>
+          <Title>{title}</Title>
+        </StyleLink>
         <SubtitleContainer>
           <SubTitleWrapper>
             <SubTittle>Score</SubTittle>
