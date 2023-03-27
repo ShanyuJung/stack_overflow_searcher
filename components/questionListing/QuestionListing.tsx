@@ -34,6 +34,12 @@ const LoadingSpinner = styled.div`
   background-size: cover;
 `;
 
+const WarningText = styled.h2`
+  width: 100%;
+  text-align: center;
+  color: red;
+`;
+
 const QuestionListing = () => {
   const [data, setData] = useState<IQuestion[]>([]);
   const [curPage, setCurPage] = useState<number>(1);
@@ -44,14 +50,21 @@ const QuestionListing = () => {
   const trending = useSelector((state: RootState) => state.trending);
 
   const fetchQuestionHandler = useCallback(async () => {
+    if (!trending.selectedTag) {
+      setIsError(true);
+      return;
+    }
+
     if (isLoading || !hasMore) return;
 
-    console.log("fetch", curPage);
     try {
       setIsError(false);
       setIsLoading(true);
       const res = await api.fetchQuestion(curPage, trending.selectedTag);
       const data = res.items as IQuestion[];
+      if (!data) {
+        throw new Error("Data Error");
+      }
       setData((prev) => [...prev, ...data]);
       setCurPage((prev) => prev + 1);
       if (!res.has_more) {
@@ -85,11 +98,17 @@ const QuestionListing = () => {
     };
   }, [fetchQuestionHandler]);
 
+  useEffect(() => {
+    setCurPage(1);
+    setData([]);
+  }, [trending.selectedTag]);
+
   return (
     <ListContainer>
       {data.map((item) => {
         return <Question key={item.question_id} questionData={item} />;
       })}
+      {isError && <WarningText>Something went wrong!</WarningText>}
       <ObserverContainer ref={containerRef}>
         {isLoading && <LoadingSpinner />}
       </ObserverContainer>
