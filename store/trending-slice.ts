@@ -1,7 +1,7 @@
-import { TrendingStore } from "@/types/types";
+import { ITrendingStore } from "@/types/types";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: TrendingStore = {
+const initialState: ITrendingStore = {
   trendingTags: [],
   selectedTag: "",
   error: false,

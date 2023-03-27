@@ -11,7 +11,7 @@ const GlobalStyles = createGlobalStyle`
 }
 
 body {
-    padding: 1rem 0.8rem;
+    padding: 0 0.8rem;
     background-color: #fff;
     min-height: 100vh;
 }

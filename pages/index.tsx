@@ -4,6 +4,13 @@ import Trending from "@/components/trending/Trending";
 import { GetServerSideProps, NextPage } from "next";
 import { wrapper } from "@/store";
 import { initTrendingHandler } from "@/store/trending-actions";
+import QuestionListing from "@/components/questionListing/QuestionListing";
+import styled from "styled-components";
+
+const Container = styled.div`
+  max-width: 1280px;
+  margin: auto;
+`;
 
 const Home: NextPage = () => {
   return (
@@ -15,8 +22,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Searching />
-        <Trending />
+        <Container>
+          <Searching />
+          <Trending />
+          <QuestionListing />
+        </Container>
       </main>
     </>
   );
