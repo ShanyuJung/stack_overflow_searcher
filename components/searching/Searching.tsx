@@ -63,7 +63,7 @@ const Searching = () => {
         window.clearTimeout(timerRef.current);
       }
     };
-  }, [curTag, dispatch]);
+  }, [curTag, dispatch, trending.selectedTag]);
 
   return (
     <form onSubmit={onSubmitHandler}>
