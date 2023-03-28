@@ -35,6 +35,12 @@ const LoadingSpinner = styled.div`
   background-size: cover;
 `;
 
+const WarningText = styled.h2`
+  width: 100%;
+  text-align: center;
+  color: red;
+`;
+
 const QuestionListing = () => {
   const [data, setData] = useState<IQuestion[]>([]);
   const [curPage, setCurPage] = useState<number>(1);
@@ -94,12 +100,18 @@ const QuestionListing = () => {
 
   useEffect(() => {
     setIsError(false);
+    setHasMore(true);
     setCurPage(1);
     setData([]);
   }, [trending.selectedTag]);
 
+  console.log(trending, data);
+
   return (
     <ListContainer>
+      {data.length === 0 && !isError && !isLoading && (
+        <WarningText>{`Can not found question with "${trending.selectedTag}" tag`}</WarningText>
+      )}
       {data?.map((item) => {
         return <Question key={item.question_id} questionData={item} />;
       })}
