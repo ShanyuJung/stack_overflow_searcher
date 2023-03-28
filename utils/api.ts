@@ -5,6 +5,13 @@ export const api = {
   order: "desc",
   sort: "activity",
   async fetchQuestion(page: number, tag: string) {
+    if (tag.includes("#")) {
+      const newTag = tag.replace("#", "%23");
+      const res = await fetch(
+        `${this.hostname}/${this.version}/questions?page=${page}&pagesize=${this.pagesize}&order=${this.order}&sort=${this.sort}&tagged=${newTag}&site=stackoverflow`
+      );
+      return await res.json();
+    }
     const res = await fetch(
       `${this.hostname}/${this.version}/questions?page=${page}&pagesize=${this.pagesize}&order=${this.order}&sort=${this.sort}&tagged=${tag}&site=stackoverflow`
     );
