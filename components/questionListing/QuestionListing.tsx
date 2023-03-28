@@ -93,6 +93,7 @@ const QuestionListing = () => {
   }, [fetchQuestionHandler]);
 
   useEffect(() => {
+    setIsError(false);
     setCurPage(1);
     setData([]);
   }, [trending.selectedTag]);
