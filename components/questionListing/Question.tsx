@@ -18,18 +18,25 @@ const Wrapper = styled.div`
   height: 6rem;
   flex-direction: column;
   flex-grow: 1;
+  width: calc(100% - 8rem);
 `;
 
 const StyleLink = styled.a`
   cursor: pointer;
   text-decoration: none;
   color: #000;
+  position: relative;
+
   &:hover {
     text-decoration: underline;
   }
 `;
 
-const Title = styled.h4``;
+const Title = styled.h4`
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
 
 const SubtitleContainer = styled.div`
   display: flex;
