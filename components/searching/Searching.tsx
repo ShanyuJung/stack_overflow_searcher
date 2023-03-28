@@ -53,7 +53,7 @@ const Searching = () => {
   };
 
   useEffect(() => {
-    if (trending.selectedTag === curTag || !curTag) return;
+    if (!curTag) return;
     timerRef.current = window.setTimeout(() => {
       dispatch(trendingActions.selectTag({ selectedTag: curTag }));
     }, 1000);
@@ -63,7 +63,7 @@ const Searching = () => {
         window.clearTimeout(timerRef.current);
       }
     };
-  }, [curTag, dispatch, trending.selectedTag]);
+  }, [curTag, dispatch]);
 
   return (
     <form onSubmit={onSubmitHandler}>
