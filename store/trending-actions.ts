@@ -3,7 +3,7 @@ import { trendingActions } from "./trending-slice";
 
 export const initTrendingHandler = () => {
   return async (
-    dispatch: (arg0: { payload: any; type: "trending/initTrending" }) => void
+    dispatch: (arg0: { type: "trending/initTrending" }) => void
   ) => {
     try {
       const data = await api.fetchTrendingTags(10);
