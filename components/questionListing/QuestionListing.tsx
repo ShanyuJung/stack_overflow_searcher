@@ -115,7 +115,7 @@ const QuestionListing = () => {
       {data?.map((item) => {
         return <Question key={item.question_id} questionData={item} />;
       })}
-      {isError && <ErrorText errorId={errorId} />}
+      {isError && !isLoading && <ErrorText errorId={errorId} />}
       <ObserverContainer ref={containerRef}>
         {isLoading && <LoadingSpinner />}
       </ObserverContainer>
